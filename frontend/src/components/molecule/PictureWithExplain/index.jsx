@@ -13,9 +13,9 @@ export default class PictureWithExplain extends Component {
           display: 'flex',
           flexDirection: 'row',
           height: '50vh',
-          backgroundColor: 'green',
           paddingTop: '5vh',
-          marginBottom: '3vh',
+          marginTop: '3vh',
+          backgroundColor: '#ECEFF1',
         }}
       >
         <div

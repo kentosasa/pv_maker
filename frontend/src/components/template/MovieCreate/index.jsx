@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import Modal from 'react-modal';
 
 const customStyles = {
@@ -13,45 +15,37 @@ const customStyles = {
     right                 : 'auto',
     bottom                : 'auto',
     marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
+    transform             : 'translate(-50%, -50%)',
+    zIndex                : 3,
   }
 };
 
-const movie = [
-  {
-    title: 'hello man',
-    scenes: [
-      {
-        image: 'sdkflsd',
-        text: 'alsdkfjlsdkajf'
-      },
-      {
-        image: 'sdkfjsdlfj',
-        text: 'sdfjsdljsldfajdal;',
-      },
-      {
-        hello: 'sdlkfjlsd',
-        text: 'sldkfjwlejlw',
-      },
-    ]
-  }
-]
+const movieMakingData = {
+  scenes: [
+
+  ]
+}
 
 export default class MovieCreate extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       modalIsOpen: false,
-      scenes: [
-        // image, text
-      ]
+      imageSelect: false,
+      imageSelectUrl: '',
+      imagePreviewUrl: '',
+      text: '',
+      title: 'hello man',
+      movieMakingData
     };
 
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.addPictureAndText = this.addPictureAndText.bind(this);
     this._renderModal = this._renderModal.bind(this);
+    this._renderImageAndText = this._renderImageAndText.bind(this);
   }
 
   openModal() {
@@ -64,6 +58,53 @@ export default class MovieCreate extends Component {
 
   closeModal() {
     this.setState({modalIsOpen: false});
+  }
+
+  addPictureAndText() {
+    const addedScene = [
+      ...this.state.movieMakingData.scenes,
+      {
+        image: this.state.imagePreviewUrl,
+        text: this.state.text,
+      }
+    ]
+    this.setState({
+      movieMakingData: {
+        scenes: addedScene,
+      },
+      imagePreviewUrl: '',
+      text: ''
+    })
+  }
+
+  _renderImageAndText({scene, index}) {
+    return (
+      <div
+        style={{
+          marginBottom: '3vh',
+        }}
+      >
+        <Card>
+          <CardMedia
+            overlay={<CardTitle title={`Scene ${index+1}`} />}
+          >
+            <img
+              src={scene.image}
+              height={350}
+            />
+          </CardMedia>
+          <CardText>
+            {scene.text}
+          </CardText>
+          <CardActions style={{zIndex: 0}}>
+            <FlatButton label="修正" />
+            <FlatButton
+              label="削除"
+            />
+          </CardActions>
+        </Card>
+      </div>
+    )
   }
 
   _renderModal() {
@@ -96,31 +137,74 @@ export default class MovieCreate extends Component {
                 alignItems: 'center',
               }}
             >
-              <div
-                style={{
-                  backgroundColor: 'gray',
-                  height: '20vh',
-                  width: '50vw',
-                  marginBottom: '20px',
-                }}
-              >
-              </div>
-              <RaisedButton 
-                label='画像を追加'
-                primary
-                style={{
-                  width: '50vw',
-                }}
-              />
-              <TextField
-                style={{
-                  width: '50vw',
-                }}
-                floatingLabelText="内容を入力してください。"
-                textareaStyle
-                multiLine
-                rows={5}
-              />
+              {
+                this.state.imageSelect && this.state.imageSelectUrl ?
+                  <img 
+                    src={this.state.imagePreviewUrl}
+                    height='300'
+                    width='600'
+                  /> : (
+                  <div
+                    style={{
+                      backgroundColor: 'gray',
+                      height: '20vh',
+                      width: '50vw',
+                      marginBottom: '20px',
+                    }}
+                  />
+                )
+              }
+                <RaisedButton 
+                  label='画像を追加'
+                  primary
+                  style={{
+                    width: '50vw',
+                  }}
+                >
+                  <input 
+                    type="file"
+                    onChange={(e) => {
+                      e.preventDefault();
+
+                      let reader = new FileReader();
+                      let file = e.target.files[0];
+
+                      reader.onloadend = () => {
+                        this.setState({
+                          imageSelect: true,
+                          imageSelectUrl: file,
+                          imagePreviewUrl: reader.result
+                        });
+                      }
+                      reader.readAsDataURL(file)
+                    }}
+                    style={{
+                      cursor: 'pointer',
+                      position: 'absolute',
+                      top: 0,
+                      bottom: 0,
+                      right: 0,
+                      left: 0,
+                      width: '100%',
+                      opacity: 0,
+                    }}
+                  />
+                </RaisedButton>
+                <TextField
+                  style={{
+                    width: '50vw',
+                  }}
+                  floatingLabelText="内容を入力してください。"
+                  textareaStyle
+                  multiLine
+                  onChange={(e) => {
+                    e.preventDefault();
+                    this.setState({
+                      text: e.target.value
+                    })
+                  }}
+                  rows={3}
+                />
             </div>
           </form>
           <div
@@ -133,6 +217,10 @@ export default class MovieCreate extends Component {
               label='貼り付け'
               style={{
                 marginRight: '1vw'
+              }}
+              onClick={() => {
+                this.addPictureAndText()
+                this.closeModal()
               }}
             />
             <RaisedButton
@@ -149,6 +237,7 @@ export default class MovieCreate extends Component {
     )
   }
   render() {
+    console.log(this.state);
     return (
       <div style={{
         display: 'flex',
@@ -161,8 +250,6 @@ export default class MovieCreate extends Component {
         <div
           style={{
             flex: 1,
-            backgroundColor: 'gray',
-            minHeight: '100vh',
           }}
         >
 
@@ -171,7 +258,7 @@ export default class MovieCreate extends Component {
         <div
           style={{
             display: 'flex',
-            flex: 4,
+            flex: 2,
             flexDirection: 'column',
             minHeight: '100vh',
           }}
@@ -186,13 +273,21 @@ export default class MovieCreate extends Component {
           }}>
             <h1>PV 作成</h1>
           </div>
+          <div>
+            <hr/>
+            <h2 style={{paddingLeft: '1vw'}}>題名：{this.state.title}</h2>
+            <hr/>
+          </div>
+          {
+            this.state.movieMakingData.scenes.map((scene, index) => (
+              this._renderImageAndText({scene, index})
+            ))
+          }
         </div>
         {/* right column */}
         <div
           style={{
             flex: 1,
-            backgroundColor: 'gray',
-            minHeight: '100vh',
           }}
         />
         {/* Fixed button */}
