@@ -1,0 +1,32 @@
+<%= form_for(pv) do |f| %>
+  <% if pv.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(pv.errors.count, "error") %> prohibited this pv from being saved:</h2>
+
+      <ul>
+      <% pv.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= f.label :user_name %>
+    <%= f.text_field :user_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %>
+    <%= f.text_field :password %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

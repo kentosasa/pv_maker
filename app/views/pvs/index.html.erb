@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Pvs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>User name</th>
+      <th>Password</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pvs.each do |pv| %>
+      <tr>
+        <td><%= pv.title %></td>
+        <td><%= pv.user_name %></td>
+        <td><%= pv.password %></td>
+        <td><%= link_to 'Show', pv %></td>
+        <td><%= link_to 'Edit', edit_pv_path(pv) %></td>
+        <td><%= link_to 'Destroy', pv, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pv', new_pv_path %>
