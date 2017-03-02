@@ -24,7 +24,7 @@ gulp.task('babel', function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch('./src/*.es6', ['babel'])
+  gulp.watch('./es6/*.es6', ['babel'])
   // gulp.watch('./**/main.js', ['browserify'])
 });
 
