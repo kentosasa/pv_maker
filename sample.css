@@ -1,0 +1,18 @@
+html, body {
+  width: 100%;
+  position: relative;
+}
+
+canvas {
+  margin: auto 0;
+  width: 1280px;
+}
+
+#test {
+  position: absolute;
+  background: #fff;
+  top: 100px;
+  left: 100px;
+  width: 100px;
+  height: 400px;
+}
