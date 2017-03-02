@@ -10,7 +10,8 @@ class PvsController < ApplicationController
   # GET /pvs/1
   # GET /pvs/1.json
   def show
-    @pictures = PictureStore.where(id: @pv.id)
+    @pictures = PictureStore.where(pv_id: @pv.id)
+    binding.pry
   end
 
   # GET /pvs/new
