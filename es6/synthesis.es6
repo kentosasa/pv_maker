@@ -4,7 +4,9 @@ var data = {
   scenes: [
     {
       text: 'これは動画を簡単に\n作成できるツールです。',
-      movie: './img/movie.mov'
+      movie: './img/movie.mov',
+      duration: 10,
+      type: 'movie'
     }
   ]
 }
@@ -22,6 +24,7 @@ var ctx
 var exportImages = []
 var time = 0
 var animationTimer
+var sceneNum = 0
 
 // 初期化処理
 var initialize = function () {
@@ -31,29 +34,52 @@ var initialize = function () {
   canvas.width = width
   canvas.height = height
   ctx = canvas.getContext('2d')
-  var encoder = new EncodeMovieType(data.scenes[0])
-  encoder.encode()
-
+  encoder(sceneNum)
 }
 
-class EncodeMovieType {
+var encoder = function () {
+  if (data.scenes.length == sceneNum) {
+    console.log('complete')
+    return
+  }
+  var scene = data.scenes[sceneNum]
+  switch (scene.type) {
+    case 'movie':
+      var movieTypeEncoder = new MovieTypeEncoder(data.scenes[0])
+      movieTypeEncoder.encode(encoder)
+      console.log('movie encoded')
+      break;
+    default:
+      console.log('default type')
+      break;
+  }
+}
+
+class ImageTypeEncoder {
+  constructor (scene) {
+
+  }
+}
+
+class MovieTypeEncoder {
   constructor (scene) {
     console.log(scene)
-      this.exportImages = []
-      this.scene = scene
-      this.time= 0
-      this.encode = this.encode.bind(this)
-      this.draw = this.draw.bind(this)
+    this.exportImages = []
+    this.scene = scene
+    this.time= 0
+    this.encode = this.encode.bind(this)
+    this.draw = this.draw.bind(this)
   }
 
-  encode () {
+  encode (callback) {
     video.setAttribute('src', this.scene.movie)
-    video.play()
+    // video.play()
     video.addEventListener('loadeddata', function() {
       video.play()
     })
+    this.callback = callback
     time = 0
-    animationTimer = setInterval(this.draw, 100)
+    animationTimer = setInterval(this.draw, 1000/frameRate)
   }
 
   draw () {
@@ -84,9 +110,11 @@ class EncodeMovieType {
       .catch(function (error) {
         console.log(error)
       })
-    if (time > 100) {
+    if (time > frameRate*this.scene.duration) {
       console.log(exportImages)
       clearInterval(animationTimer)
+      sceneNum += 1
+      this.callback(sceneNum)
     }
   }
 }

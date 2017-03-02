@@ -9,7 +9,9 @@ var data = {
   textColor: '#ffffff',
   scenes: [{
     text: 'これは動画を簡単に\n作成できるツールです。',
-    movie: './img/movie.mov'
+    movie: './img/movie.mov',
+    duration: 10,
+    type: 'movie'
   }]
 };
 
@@ -26,6 +28,7 @@ var ctx;
 var exportImages = [];
 var time = 0;
 var animationTimer;
+var sceneNum = 0;
 
 // 初期化処理
 var initialize = function initialize() {
@@ -35,13 +38,34 @@ var initialize = function initialize() {
   canvas.width = width;
   canvas.height = height;
   ctx = canvas.getContext('2d');
-  var encoder = new EncodeMovieType(data.scenes[0]);
-  encoder.encode();
+  encoder(sceneNum);
 };
 
-var EncodeMovieType = function () {
-  function EncodeMovieType(scene) {
-    _classCallCheck(this, EncodeMovieType);
+var encoder = function encoder() {
+  if (data.scenes.length == sceneNum) {
+    console.log('complete');
+    return;
+  }
+  var scene = data.scenes[sceneNum];
+  switch (scene.type) {
+    case 'movie':
+      var movieTypeEncoder = new MovieTypeEncoder(data.scenes[0]);
+      movieTypeEncoder.encode(encoder);
+      console.log('movie encoded');
+      break;
+    default:
+      console.log('default type');
+      break;
+  }
+};
+
+var ImageTypeEncoder = function ImageTypeEncoder(scene) {
+  _classCallCheck(this, ImageTypeEncoder);
+};
+
+var MovieTypeEncoder = function () {
+  function MovieTypeEncoder(scene) {
+    _classCallCheck(this, MovieTypeEncoder);
 
     console.log(scene);
     this.exportImages = [];
@@ -51,16 +75,17 @@ var EncodeMovieType = function () {
     this.draw = this.draw.bind(this);
   }
 
-  _createClass(EncodeMovieType, [{
+  _createClass(MovieTypeEncoder, [{
     key: 'encode',
-    value: function encode() {
+    value: function encode(callback) {
       video.setAttribute('src', this.scene.movie);
-      video.play();
+      // video.play()
       video.addEventListener('loadeddata', function () {
         video.play();
       });
+      this.callback = callback;
       time = 0;
-      animationTimer = setInterval(this.draw, 100);
+      animationTimer = setInterval(this.draw, 1000 / frameRate);
     }
   }, {
     key: 'draw',
@@ -88,14 +113,16 @@ var EncodeMovieType = function () {
       }).catch(function (error) {
         console.log(error);
       });
-      if (time > 100) {
+      if (time > frameRate * this.scene.duration) {
         console.log(exportImages);
         clearInterval(animationTimer);
+        sceneNum += 1;
+        this.callback(sceneNum);
       }
     }
   }]);
 
-  return EncodeMovieType;
+  return MovieTypeEncoder;
 }();
 
 // 非同期処理
