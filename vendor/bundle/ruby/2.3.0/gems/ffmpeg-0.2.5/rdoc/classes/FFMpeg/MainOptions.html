@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: FFMpeg::MainOptions</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">FFMpeg::MainOptions</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/ffmpeg/main_options_rb.html">
+                lib/ffmpeg/main_options.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000086">album</a>&nbsp;&nbsp;
+      <a href="#M000083">author</a>&nbsp;&nbsp;
+      <a href="#M000085">comment</a>&nbsp;&nbsp;
+      <a href="#M000084">copyright</a>&nbsp;&nbsp;
+      <a href="#M000078">duration</a>&nbsp;&nbsp;
+      <a href="#M000079">file_size_limit</a>&nbsp;&nbsp;
+      <a href="#M000090">frames_to_record</a>&nbsp;&nbsp;
+      <a href="#M000081">offset</a>&nbsp;&nbsp;
+      <a href="#M000077">overwrite_existing_file</a>&nbsp;&nbsp;
+      <a href="#M000080">seek</a>&nbsp;&nbsp;
+      <a href="#M000075">source</a>&nbsp;&nbsp;
+      <a href="#M000091">subtitle_codec</a>&nbsp;&nbsp;
+      <a href="#M000076">target</a>&nbsp;&nbsp;
+      <a href="#M000089">target</a>&nbsp;&nbsp;
+      <a href="#M000082">title</a>&nbsp;&nbsp;
+      <a href="#M000087">track</a>&nbsp;&nbsp;
+      <a href="#M000088">year</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000086" class="method-detail">
+        <a name="M000086"></a>
+
+        <div class="method-heading">
+          <a href="MainOptions.src/M000086.html" target="Code" class="method-signature"
+            onclick="popupCode('MainOptions.src/M000086.html');return false;">
+          <span class="method-name">album</span><span class="method-args">(album)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Set the <a href="MainOptions.html#M000086">album</a>.
+</p>
+<pre>
+  album &quot;An awesome album&quot;
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000083" class="method-detail">
+        <a name="M000083"></a>
+
+        <div class="method-heading">
+          <a href="MainOptions.src/M000083.html" target="Code" class="method-signature"
+            onclick="popupCode('MainOptions.src/M000083.html');return false;">
+          <span class="method-name">author</span><span class="method-args">(author)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Set the <a href="MainOptions.html#M000083">author</a>.
+</p>
+<pre>
+  author &quot;PMH&quot;
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000085" class="method-detail">
+        <a name="M000085"></a>
+
+        <div class="method-heading">
+          <a href="MainOptions.src/M000085.html" target="Code" class="method-signature"
+            onclick="popupCode('MainOptions.src/M000085.html');return false;">
+          <span class="method-name">comment</span><span class="method-args">(comment)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Set the <a href="MainOptions.html#M000085">comment</a>.
+</p>
+<pre>
+  comment &quot;Some comment&quot;
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000084" class="method-detail">
+        <a name="M000084"></a>
+
+        <div class="method-heading">
+          <a href="MainOptions.src/M000084.html" target="Code" class="method-signature"
+            onclick="popupCode('MainOptions.src/M000084.html');return false;">
+          <span class="method-name">copyright</span><span class="method-args">(copyright)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Set the <a href="MainOptions.html#M000084">copyright</a>.
+</p>
+<pre>
+  copyright &quot;(c) Patrik Hedman 2009&quot;
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000078" class="method-detail">
+        <a name="M000078"></a>
+
+        <div class="method-heading">
+          <a href="MainOptions.src/M000078.html" target="Code" class="method-signature"
+            onclick="popupCode('MainOptions.src/M000078.html');return false;">
+          <span class="method-name">duration</span><span class="method-args">(duration)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Set the <a href="MainOptions.html#M000078">duration</a> specified in
+seconds. hh:mm:ss[.xxx] syntax is also supported
+</p>
+<pre>
+  duration &quot;600&quot;
+</pre>
+<p>
+or
+</p>
+<pre>
+  duration &quot;00:10:00&quot;
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000079" class="method-detail">
+        <a name="M000079"></a>
+
+        <div class="method-heading">
+          <a href="MainOptions.src/M000079.html" target="Code" class="method-signature"
+            onclick="popupCode('MainOptions.src/M000079.html');return false;">
+          <span class="method-name">file_size_limit</span><span class="method-args">(limit)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Set a file size limit in bytes
+</p>
+<pre>
+  file_size_limit 104_857_600
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000090" class="method-detail">
+        <a name="M000090"></a>
+
+        <div class="method-heading">
+          <a href="MainOptions.src/M000090.html" target="Code" class="method-signature"
+            onclick="popupCode('MainOptions.src/M000090.html');return false;">
+          <span class="method-name">frames_to_record</span><span class="method-args">(frames)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Set the number of frames to record.
+</p>
+<pre>
+  frames_to_record 50
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000081" class="method-detail">
+        <a name="M000081"></a>
+
+        <div class="method-heading">
+          <a href="MainOptions.src/M000081.html" target="Code" class="method-signature"
+            onclick="popupCode('MainOptions.src/M000081.html');return false;">
+          <span class="method-name">offset</span><span class="method-args">(offset)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Set the input time <a href="MainOptions.html#M000081">offset</a> in
+seconds.
+</p>
+<dl>
+<dt>-]hh:mm:ss[.xxx</dt><dd>syntax is also supported.
+
+</dd>
+</dl>
+<p>
+This option affects all the input files that follow it. The <a
+href="MainOptions.html#M000081">offset</a> is added to the timestamps of
+the input files. Specifying a positive <a
+href="MainOptions.html#M000081">offset</a> means that the corresponding
+streams are delayed by &#8216;<a
+href="MainOptions.html#M000081">offset</a>&#8217; seconds.
+</p>
+<pre>
+  offset &quot;600&quot;
+</pre>
+<p>
+or
+</p>
+<pre>
+  offset &quot;00:10:00&quot;
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000077" class="method-detail">
+        <a name="M000077"></a>
+
+        <div class="method-heading">
+          <a href="MainOptions.src/M000077.html" target="Code" class="method-signature"
+            onclick="popupCode('MainOptions.src/M000077.html');return false;">
+          <span class="method-name">overwrite_existing_file</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Overwrite output file if it already exists
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000080" class="method-detail">
+        <a name="M000080"></a>
+
+        <div class="method-heading">
+          <a href="MainOptions.src/M000080.html" target="Code" class="method-signature"
+            onclick="popupCode('MainOptions.src/M000080.html');return false;">
+          <span class="method-name">seek</span><span class="method-args">(position)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Seek to given time position in seconds. hh:mm:ss[.xxx] syntax is also
+supported.
+</p>
+<pre>
+  seek &quot;600&quot;
+</pre>
+<p>
+or
+</p>
+<pre>
+  seek &quot;00:10:00&quot;
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000075" class="method-detail">
+        <a name="M000075"></a>
+
+        <div class="method-heading">
+          <a href="MainOptions.src/M000075.html" target="Code" class="method-signature"
+            onclick="popupCode('MainOptions.src/M000075.html');return false;">
+          <span class="method-name">source</span><span class="method-args">(*filename)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000091" class="method-detail">
+        <a name="M000091"></a>
+
+        <div class="method-heading">
+          <a href="MainOptions.src/M000091.html" target="Code" class="method-signature"
+            onclick="popupCode('MainOptions.src/M000091.html');return false;">
+          <span class="method-name">subtitle_codec</span><span class="method-args">(codec)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Force subtitle codec (&#8216;copy&#8217; to copy stream)
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000076" class="method-detail">
+        <a name="M000076"></a>
+
+        <div class="method-heading">
+          <a href="MainOptions.src/M000076.html" target="Code" class="method-signature"
+            onclick="popupCode('MainOptions.src/M000076.html');return false;">
+          <span class="method-name">target</span><span class="method-args">(target)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000089" class="method-detail">
+        <a name="M000089"></a>
+
+        <div class="method-heading">
+          <a href="MainOptions.src/M000089.html" target="Code" class="method-signature"
+            onclick="popupCode('MainOptions.src/M000089.html');return false;">
+          <span class="method-name">target</span><span class="method-args">(target)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Specify <a href="MainOptions.html#M000076">target</a> file type
+(&quot;vcd&quot;, &quot;svcd&quot;, &quot;dvd&quot;, &quot;dv&quot;,
+&quot;dv50&quot;, &quot;pal-vcd&quot;, &quot;ntsc-svcd&quot;, &#8230; ).
+All the format options (bitrate, codecs, buffer sizes) are then set
+automatically. Nevertheless you can specify additional options as long as
+you know they do not conflict with the standard.
+</p>
+<pre>
+  target &quot;vcd&quot;
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000082" class="method-detail">
+        <a name="M000082"></a>
+
+        <div class="method-heading">
+          <a href="MainOptions.src/M000082.html" target="Code" class="method-signature"
+            onclick="popupCode('MainOptions.src/M000082.html');return false;">
+          <span class="method-name">title</span><span class="method-args">(title)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Set the <a href="MainOptions.html#M000082">title</a>.
+</p>
+<pre>
+  title &quot;Some Title&quot;
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000087" class="method-detail">
+        <a name="M000087"></a>
+
+        <div class="method-heading">
+          <a href="MainOptions.src/M000087.html" target="Code" class="method-signature"
+            onclick="popupCode('MainOptions.src/M000087.html');return false;">
+          <span class="method-name">track</span><span class="method-args">(track)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Set the <a href="MainOptions.html#M000087">track</a> number:
+</p>
+<pre>
+  track 1
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000088" class="method-detail">
+        <a name="M000088"></a>
+
+        <div class="method-heading">
+          <a href="MainOptions.src/M000088.html" target="Code" class="method-signature"
+            onclick="popupCode('MainOptions.src/M000088.html');return false;">
+          <span class="method-name">year</span><span class="method-args">(year)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Set the <a href="MainOptions.html#M000088">year</a>.
+</p>
+<pre>
+  year 1985
+</pre>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

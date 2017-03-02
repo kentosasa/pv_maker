@@ -56,3 +56,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'pry'
 gem 'carrierwave'
+gem 'flowplayer', git: 'git://github.com/scottdavis/flowplayer-gem.git'
+gem 'ffmpeg'
+gem 'streamio-ffmpeg'
