@@ -8,12 +8,12 @@ var data = {
   backColor: '#333333',
   textColor: '#ffffff',
   scenes: [{
-    text: 'こんな感じで\n画像と文字がが映像になります',
+    text: 'こんな感じで\n画像と文字が映像になります',
     image: './img/screenshot.PNG',
     duration: 2,
     type: 'image'
   }, {
-    text: 'これは動画を簡単に\n作成できるツールです。',
+    text: 'これは動画を簡単に\n作成できるツールです。\n\nスマホで撮影した映像を\n投稿するとこんな感じになります。',
     movie: './img/movie.mov',
     duration: 10,
     type: 'movie'
@@ -37,7 +37,7 @@ var sceneNum = 0;
 
 // web speech API
 var synthes = new SpeechSynthesisUtterance();
-synthes.lang = 'ja';
+synthes.lang = "ja-JP";
 
 // 初期化処理
 var initialize = function initialize() {
@@ -87,6 +87,7 @@ var ImageTypeEncoder = function () {
     value: function encode(callback) {
       time = 0;
       this.callback = callback;
+      say(this.scene.text);
       animationTimer = setInterval(this.draw, 1000 / frameRate);
     }
   }, {
@@ -106,6 +107,10 @@ var ImageTypeEncoder = function () {
       }).then(function () {
         //枠の描画
         return drawImage(image, 758, 168, 216, 393);
+      }).then(function () {
+        return new Promise(function (resolve, reject) {
+          exportImages.push(exportPng());
+        });
       }).catch(function (error) {
         console.log(error);
       });
@@ -139,6 +144,7 @@ var MovieTypeEncoder = function () {
         video.play();
       });
       this.callback = callback;
+      say(this.scene.text);
       time = 0;
       animationTimer = setInterval(this.draw, 1000 / frameRate);
     }
@@ -215,7 +221,8 @@ var exportPng = function exportPng() {
 };
 
 var say = function say(text) {
-  speechSynthesis.speak(new SpeechSynthesisUtterance(text));
+  synthes.text = text;
+  speechSynthesis.speak(synthes);
 };
 
 window.onload = function () {

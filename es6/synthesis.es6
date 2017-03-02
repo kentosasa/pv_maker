@@ -3,13 +3,13 @@ var data = {
   textColor: '#ffffff',
   scenes: [
     {
-      text: 'こんな感じで\n画像と文字がが映像になります',
+      text: 'こんな感じで\n画像と文字が映像になります',
       image: './img/screenshot.PNG',
       duration: 2,
       type: 'image'
     },
     {
-      text: 'これは動画を簡単に\n作成できるツールです。',
+      text: 'これは動画を簡単に\n作成できるツールです。\n\nスマホで撮影した映像を\n投稿するとこんな感じになります。',
       movie: './img/movie.mov',
       duration: 10,
       type: 'movie'
@@ -34,8 +34,8 @@ var sceneNum = 0
 
 
 // web speech API
-var synthes = new SpeechSynthesisUtterance();
-synthes.lang = 'ja';
+var synthes = new SpeechSynthesisUtterance()
+synthes.lang = "ja-JP"
 
 // 初期化処理
 var initialize = function () {
@@ -80,6 +80,7 @@ class ImageTypeEncoder {
   encode (callback) {
     time = 0
     this.callback = callback
+    say(this.scene.text)
     animationTimer = setInterval(this.draw, 1000/frameRate)
   }
   draw () {
@@ -99,6 +100,11 @@ class ImageTypeEncoder {
       .then(function() {
         //枠の描画
         return drawImage(image, 758, 168, 216, 393)
+      })
+      .then(function () {
+        return new Promise((resolve, reject) => {
+          exportImages.push(exportPng())
+        })
       })
       .catch(function (error) {
         console.log(error)
@@ -126,6 +132,7 @@ class MovieTypeEncoder {
       video.play()
     })
     this.callback = callback
+    say(this.scene.text)
     time = 0
     animationTimer = setInterval(this.draw, 1000/frameRate)
   }
@@ -200,9 +207,10 @@ var exportPng = function () {
 }
 
 var say = function(text) {
+  synthes.text = text
   speechSynthesis.speak(
-    new SpeechSynthesisUtterance(text)
-  );
+    synthes
+  )
 }
 
 window.onload = function() {
