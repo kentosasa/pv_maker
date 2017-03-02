@@ -3,6 +3,12 @@ var data = {
   textColor: '#ffffff',
   scenes: [
     {
+      text: 'こんな感じで\n画像と文字がが映像になります',
+      image: './img/screenshot.PNG',
+      duration: 2,
+      type: 'image'
+    },
+    {
       text: 'これは動画を簡単に\n作成できるツールです。',
       movie: './img/movie.mov',
       duration: 10,
@@ -26,6 +32,11 @@ var time = 0
 var animationTimer
 var sceneNum = 0
 
+
+// web speech API
+var synthes = new SpeechSynthesisUtterance();
+synthes.lang = 'ja';
+
 // 初期化処理
 var initialize = function () {
   video = document.getElementById("video")
@@ -38,17 +49,22 @@ var initialize = function () {
 }
 
 var encoder = function () {
-  if (data.scenes.length == sceneNum) {
+  if (data.scenes.length <= sceneNum) {
     console.log('complete')
     return
   }
+  console.log('call encoder: ' + sceneNum)
   var scene = data.scenes[sceneNum]
   switch (scene.type) {
     case 'movie':
-      var movieTypeEncoder = new MovieTypeEncoder(data.scenes[0])
+      var movieTypeEncoder = new MovieTypeEncoder(data.scenes[sceneNum])
       movieTypeEncoder.encode(encoder)
-      console.log('movie encoded')
+      console.log('movie encode')
       break;
+    case 'image':
+      var imageTypeEncoder = new ImageTypeEncoder(data.scenes[sceneNum])
+      imageTypeEncoder.encode(encoder)
+      console.log('image encode')
     default:
       console.log('default type')
       break;
@@ -57,16 +73,48 @@ var encoder = function () {
 
 class ImageTypeEncoder {
   constructor (scene) {
+    this.scene = scene
+    this.encode = this.encode.bind(this)
+    this.draw = this.draw.bind(this)
+  }
+  encode (callback) {
+    time = 0
+    this.callback = callback
+    animationTimer = setInterval(this.draw, 1000/frameRate)
+  }
+  draw () {
+    time = time + 1
+    var image = this.scene.image
+    //canvas初期化
+    ctx.fillStyle = data.backColor
+    ctx.fillRect(0, 0, width, height)
+    // テキストの描画
+    drawText(this.scene.text +'\n' + time, 100, 300)
 
+    Promise.resolve()
+      .then(function() {
+        //枠の描画
+        return drawImage(iphoneImage, width/2, 0, 450, height)
+      })
+      .then(function() {
+        //枠の描画
+        return drawImage(image, 758, 168, 216, 393)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+
+    if (time > frameRate*this.scene.duration) {
+      clearInterval(animationTimer)
+      sceneNum += 1
+      this.callback(sceneNum)
+    }
   }
 }
 
 class MovieTypeEncoder {
   constructor (scene) {
-    console.log(scene)
-    this.exportImages = []
     this.scene = scene
-    this.time= 0
     this.encode = this.encode.bind(this)
     this.draw = this.draw.bind(this)
   }
@@ -88,7 +136,7 @@ class MovieTypeEncoder {
     ctx.fillRect(0, 0, width, height)
 
     // テキストの描画
-    drawText(this.scene.text +'\n' + time, 50, 300)
+    drawText(this.scene.text +'\n' + time, 100, 300)
     Promise.resolve()
       .then(function() {
         //枠の描画
@@ -110,7 +158,7 @@ class MovieTypeEncoder {
       .catch(function (error) {
         console.log(error)
       })
-    if (time > frameRate*this.scene.duration) {
+    if (time >= frameRate*this.scene.duration) {
       console.log(exportImages)
       clearInterval(animationTimer)
       sceneNum += 1
@@ -149,6 +197,12 @@ var drawVideo = function () {
 var exportPng = function () {
   var data = canvas.toDataURL("image/png");
   return data
+}
+
+var say = function(text) {
+  speechSynthesis.speak(
+    new SpeechSynthesisUtterance(text)
+  );
 }
 
 window.onload = function() {

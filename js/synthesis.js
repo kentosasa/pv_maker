@@ -8,6 +8,11 @@ var data = {
   backColor: '#333333',
   textColor: '#ffffff',
   scenes: [{
+    text: 'こんな感じで\n画像と文字がが映像になります',
+    image: './img/screenshot.PNG',
+    duration: 2,
+    type: 'image'
+  }, {
     text: 'これは動画を簡単に\n作成できるツールです。',
     movie: './img/movie.mov',
     duration: 10,
@@ -30,6 +35,10 @@ var time = 0;
 var animationTimer;
 var sceneNum = 0;
 
+// web speech API
+var synthes = new SpeechSynthesisUtterance();
+synthes.lang = 'ja';
+
 // 初期化処理
 var initialize = function initialize() {
   video = document.getElementById("video");
@@ -42,35 +51,81 @@ var initialize = function initialize() {
 };
 
 var encoder = function encoder() {
-  if (data.scenes.length == sceneNum) {
+  if (data.scenes.length <= sceneNum) {
     console.log('complete');
     return;
   }
+  console.log('call encoder: ' + sceneNum);
   var scene = data.scenes[sceneNum];
   switch (scene.type) {
     case 'movie':
-      var movieTypeEncoder = new MovieTypeEncoder(data.scenes[0]);
+      var movieTypeEncoder = new MovieTypeEncoder(data.scenes[sceneNum]);
       movieTypeEncoder.encode(encoder);
-      console.log('movie encoded');
+      console.log('movie encode');
       break;
+    case 'image':
+      var imageTypeEncoder = new ImageTypeEncoder(data.scenes[sceneNum]);
+      imageTypeEncoder.encode(encoder);
+      console.log('image encode');
     default:
       console.log('default type');
       break;
   }
 };
 
-var ImageTypeEncoder = function ImageTypeEncoder(scene) {
-  _classCallCheck(this, ImageTypeEncoder);
-};
+var ImageTypeEncoder = function () {
+  function ImageTypeEncoder(scene) {
+    _classCallCheck(this, ImageTypeEncoder);
+
+    this.scene = scene;
+    this.encode = this.encode.bind(this);
+    this.draw = this.draw.bind(this);
+  }
+
+  _createClass(ImageTypeEncoder, [{
+    key: 'encode',
+    value: function encode(callback) {
+      time = 0;
+      this.callback = callback;
+      animationTimer = setInterval(this.draw, 1000 / frameRate);
+    }
+  }, {
+    key: 'draw',
+    value: function draw() {
+      time = time + 1;
+      var image = this.scene.image;
+      //canvas初期化
+      ctx.fillStyle = data.backColor;
+      ctx.fillRect(0, 0, width, height);
+      // テキストの描画
+      drawText(this.scene.text + '\n' + time, 100, 300);
+
+      Promise.resolve().then(function () {
+        //枠の描画
+        return drawImage(iphoneImage, width / 2, 0, 450, height);
+      }).then(function () {
+        //枠の描画
+        return drawImage(image, 758, 168, 216, 393);
+      }).catch(function (error) {
+        console.log(error);
+      });
+
+      if (time > frameRate * this.scene.duration) {
+        clearInterval(animationTimer);
+        sceneNum += 1;
+        this.callback(sceneNum);
+      }
+    }
+  }]);
+
+  return ImageTypeEncoder;
+}();
 
 var MovieTypeEncoder = function () {
   function MovieTypeEncoder(scene) {
     _classCallCheck(this, MovieTypeEncoder);
 
-    console.log(scene);
-    this.exportImages = [];
     this.scene = scene;
-    this.time = 0;
     this.encode = this.encode.bind(this);
     this.draw = this.draw.bind(this);
   }
@@ -95,7 +150,7 @@ var MovieTypeEncoder = function () {
       ctx.fillRect(0, 0, width, height);
 
       // テキストの描画
-      drawText(this.scene.text + '\n' + time, 50, 300);
+      drawText(this.scene.text + '\n' + time, 100, 300);
       Promise.resolve().then(function () {
         //枠の描画
         return drawImage(iphoneImage, width / 2, 0, 450, height);
@@ -113,7 +168,7 @@ var MovieTypeEncoder = function () {
       }).catch(function (error) {
         console.log(error);
       });
-      if (time > frameRate * this.scene.duration) {
+      if (time >= frameRate * this.scene.duration) {
         console.log(exportImages);
         clearInterval(animationTimer);
         sceneNum += 1;
@@ -157,6 +212,10 @@ var drawVideo = function drawVideo() {
 var exportPng = function exportPng() {
   var data = canvas.toDataURL("image/png");
   return data;
+};
+
+var say = function say(text) {
+  speechSynthesis.speak(new SpeechSynthesisUtterance(text));
 };
 
 window.onload = function () {
