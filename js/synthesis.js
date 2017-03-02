@@ -99,7 +99,7 @@ var ImageTypeEncoder = function () {
       ctx.fillStyle = data.backColor;
       ctx.fillRect(0, 0, width, height);
       // テキストの描画
-      drawText(this.scene.text + '\n' + time, 100, 300);
+      drawText(this.scene.text + '\n' + time, 100, 300, 10);
 
       Promise.resolve().then(function () {
         //枠の描画
@@ -156,7 +156,7 @@ var MovieTypeEncoder = function () {
       ctx.fillRect(0, 0, width, height);
 
       // テキストの描画
-      drawText(this.scene.text + '\n' + time, 100, 300);
+      drawText(this.scene.text + '\n' + time, 100, 300, 10);
       Promise.resolve().then(function () {
         //枠の描画
         return drawImage(iphoneImage, width / 2, 0, 450, height);
@@ -201,6 +201,9 @@ var drawImage = function drawImage(url, x, y, width, height) {
 };
 
 var drawText = function drawText(text, x, y) {
+  var fadeIn = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
+
+  ctx.globalAlpha = time / fadeIn;
   ctx.fillStyle = data.textColor;
   ctx.font = "36px 'メイリオ'";
   var textList = text.split('\n');
@@ -208,6 +211,7 @@ var drawText = function drawText(text, x, y) {
   textList.forEach(function (text, i) {
     ctx.fillText(text, x, y + lineHeight * i);
   });
+  ctx.globalAlpha = 1;
 };
 
 var drawVideo = function drawVideo() {
@@ -222,7 +226,7 @@ var exportPng = function exportPng() {
 
 var say = function say(text) {
   synthes.text = text;
-  speechSynthesis.speak(synthes);
+  // speechSynthesis.speak(synthes)
 };
 
 window.onload = function () {

@@ -90,7 +90,7 @@ class ImageTypeEncoder {
     ctx.fillStyle = data.backColor
     ctx.fillRect(0, 0, width, height)
     // テキストの描画
-    drawText(this.scene.text +'\n' + time, 100, 300)
+    drawText(this.scene.text +'\n' + time, 100, 300, 10)
 
     Promise.resolve()
       .then(function() {
@@ -143,7 +143,7 @@ class MovieTypeEncoder {
     ctx.fillRect(0, 0, width, height)
 
     // テキストの描画
-    drawText(this.scene.text +'\n' + time, 100, 300)
+    drawText(this.scene.text +'\n' + time, 100, 300, 10)
     Promise.resolve()
       .then(function() {
         //枠の描画
@@ -186,7 +186,8 @@ var drawImage = function (url, x, y, width, height) {
   })
 }
 
-var drawText = function (text, x, y) {
+var drawText = function (text, x, y, fadeIn = 1) {
+  ctx.globalAlpha = time/fadeIn
   ctx.fillStyle = data.textColor
   ctx.font = "36px 'メイリオ'";
   var textList = text.split('\n');
@@ -194,6 +195,7 @@ var drawText = function (text, x, y) {
   textList.forEach(function(text, i) {
     ctx.fillText(text, x, y+lineHeight*i);
   })
+  ctx.globalAlpha = 1
 }
 
 var drawVideo = function () {
@@ -208,9 +210,7 @@ var exportPng = function () {
 
 var say = function(text) {
   synthes.text = text
-  speechSynthesis.speak(
-    synthes
-  )
+  // speechSynthesis.speak(synthes)
 }
 
 window.onload = function() {
