@@ -26,7 +26,7 @@ var initialize = function () {
   canvas.width = width
   canvas.height = height
   ctx = canvas.getContext('2d')
-  animationTimer = setInterval(draw, 100);
+  animationTimer = setInterval(draw, 1000);
 }
 
 var draw = function () {
@@ -34,11 +34,15 @@ var draw = function () {
   ctx.fillStyle = data.backColor
   ctx.fillRect(0, 0, width, height)
 
+  // テキストの描画
   drawText(data.text + count)
 
+  // iPhoneの枠を描画
   drawImage(frame, width/2, 0, 450, height)
 
   drawImage(data.imageUrl, 758, 168, 216, 393)
+  // drawVideo()
+  //exportPng()
 }
 
 
@@ -63,7 +67,7 @@ var drawImage = function (url, x, y, width, height) {
 
 // 現在のcnavasのモノをbase64で返す
 var exportPng = function () {
-  var data = ctx.toDataURL("image/png");
+  var data = canvas.toDataURL("image/png");
   console.log(data)
 }
 
