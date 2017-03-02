@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider, connect } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
+import { syncHistoryWithStore, routerReducer, routerMiddleware, push } from 'react-router-redux';
 import mainReducer from './ducks/index';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -19,7 +19,12 @@ import './index.css';
 
 injectTapEventPlugin();
 
-const store = createStore(mainReducer)
+const store = createStore(
+  mainReducer,
+  applyMiddleware(
+    routerMiddleware(browserHistory)
+  ),
+)
 
 function defaultConnect(component) {
   return connect(
