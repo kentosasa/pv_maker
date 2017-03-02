@@ -1,0 +1,19 @@
+.menuItem {
+  width: 20vh;
+  color: white;
+  font-size: 1rem;
+  line-height: 3rem;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.menuItem:hover {
+  background-color: #495057;
+}
+
+.menuItem:active, .menuItem.active {
+  background-color: #1862ab;
+}
