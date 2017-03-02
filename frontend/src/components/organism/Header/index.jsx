@@ -15,7 +15,7 @@ export default class Header extends Component {
         <div style={{width: '30vh', marginLeft: '5vh'}}>
           <MenuItem to="/" active={router.isActive('/', true)} name="Home" />
           <MenuItem to="/how" active={router.isActive('/how')} name="How" />
-          <MenuItem to="/create" active={router.isActive('/create')} name="Create" />
+          <MenuItem to="/movie/create" active={router.isActive('/movie/create')} name="Create" />
         </div>
       </div>
     );

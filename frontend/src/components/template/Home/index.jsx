@@ -13,8 +13,9 @@ const charaImage = [
   require('../../../asset/haedal.png'),
 ]
 
-export default class Pinterest extends Component {
+export default class Home extends Component {
   render() {
+    console.log(this.props);
     return (
       <div>
         <div 
@@ -33,7 +34,7 @@ export default class Pinterest extends Component {
           <div>
           <h2>I love you</h2>
           </div>
-          <Link to="/pinterest">
+          <Link to="/movie/create">
             <RaisedButton
               primary
               label='動画を作成する'
