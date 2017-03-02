@@ -1,0 +1,2 @@
+class Pv < ApplicationRecord
+end
