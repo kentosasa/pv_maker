@@ -4,7 +4,6 @@ body {
   font-family: sans-serif;
 }
 
-/*#body-wrapper {
-  padding-left: 10vh;
-  padding-right: 10vh;
-}*/
+#body-wrapper {
+  font-family: "Hiragino Kaku Gothic ProN","メイリオ", sans-serif;
+}
