@@ -8,6 +8,14 @@ var data = {
   backColor: '#333333',
   textColor: '#ffffff',
   scenes: [{
+    text: 'Promo',
+    logo: './img/logo.png',
+    duration: 6,
+    opBackColor: '#ffffff',
+    opBoxColor: '#333333',
+    opTextColor: '#ffffff',
+    type: 'op'
+  }, {
     text: 'こんな感じで\n画像と文字が映像になります',
     image: './img/screenshot.PNG',
     duration: 2,
@@ -25,6 +33,7 @@ var width = 1280;
 var height = 720;
 var iphoneImage = './img/frame.png';
 var frameRate = 10;
+var boxWidth = 150;
 
 var canvas;
 var video;
@@ -67,11 +76,78 @@ var encoder = function encoder() {
       var imageTypeEncoder = new ImageTypeEncoder(data.scenes[sceneNum]);
       imageTypeEncoder.encode(encoder);
       console.log('image encode');
+      break;
+    case 'op':
+      var opTypeEncoder = new OpTypeEncoder(data.scenes[sceneNum]);
+      opTypeEncoder.encode(encoder);
+      console.log('op encode');
+      break;
     default:
       console.log('default type');
       break;
   }
 };
+
+var OpTypeEncoder = function () {
+  function OpTypeEncoder(scene) {
+    _classCallCheck(this, OpTypeEncoder);
+
+    this.scene = scene;
+    this.encode = this.encode.bind(this);
+    this.draw = this.draw.bind(this);
+    this.titleBox = [width, 200 + boxWidth, boxWidth * 3, 150];
+    this.logoBox = [-200, 270, boxWidth, boxWidth];
+  }
+
+  _createClass(OpTypeEncoder, [{
+    key: 'encode',
+    value: function encode(callback) {
+      time = 0;
+      this.callback = callback;
+      animationTimer = setInterval(this.draw, 1000 / frameRate);
+    }
+  }, {
+    key: 'draw',
+    value: function draw() {
+      time = time + 1;
+      var logo = this.scene.logo;
+
+      // Boxの位置調整
+      this.logoBox[0] += (width / 2 - this.logoBox[0]) / 10;
+      this.titleBox[0] -= (this.titleBox[0] + this.titleBox[2] / 2 - width / 2) / 10;
+
+      //canvas初期化
+      ctx.fillStyle = this.scene.opBackColor;
+      ctx.fillRect(0, 0, width, height);
+
+      // Boxの描画
+      drawCircle(this.scene.opBoxColor, boxWidth / 2, this.logoBox);
+      drawBox(this.scene.opBoxColor, this.titleBox);
+
+      // テキストの描画
+      drawLogo(this.scene.text, this.scene.opTextColor, [width / 2 - this.titleBox[2] / 2 + 100, this.titleBox[1] + 100]);
+
+      Promise.resolve().then(function () {
+        //枠の描画
+        return drawImage(logo, width / 2 - boxWidth / 2 + boxWidth * 0.15, 180 + boxWidth * 0.20, boxWidth * 0.7, boxWidth * 0.7);
+      }).then(function () {
+        return new Promise(function (resolve, reject) {
+          exportImages.push(exportPng());
+        });
+      }).catch(function (error) {
+        console.log(error);
+      });
+
+      if (time > frameRate * this.scene.duration) {
+        clearInterval(animationTimer);
+        sceneNum += 1;
+        this.callback(sceneNum);
+      }
+    }
+  }]);
+
+  return OpTypeEncoder;
+}();
 
 var ImageTypeEncoder = function () {
   function ImageTypeEncoder(scene) {
@@ -218,6 +294,23 @@ var drawVideo = function drawVideo() {
   ctx.drawImage(video, 758, 168, 216, 393);
 };
 
+var drawLogo = function drawLogo(text, color, pos) {
+  ctx.fillStyle = color;
+  ctx.font = "96px 'メイリオ'";
+  ctx.fillText(text, pos[0], pos[1], pos[2], pos[3]);
+};
+
+var drawCircle = function drawCircle(color, scale, pos) {
+  ctx.beginPath();
+  ctx.fillStyle = color;
+  ctx.arc(pos[0], pos[1], scale, 0, Math.PI * 2, false);
+  ctx.fill();
+};
+
+var drawBox = function drawBox(color, pos) {
+  ctx.fillStyle = color;
+  ctx.fillRect(pos[0], pos[1], pos[2], pos[3]);
+};
 // 現在のcnavasのモノをbase64で返す
 var exportPng = function exportPng() {
   var data = canvas.toDataURL("image/png");
