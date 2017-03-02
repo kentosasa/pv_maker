@@ -1,9 +1,12 @@
 var data = {
-  imageUrl: 'http://1.bp.blogspot.com/_HmZhi2U5N_w/TDo7b5ttEYI/AAAAAAAABF8/VwRvxQd8_1o/s1600/IMG_0002.PNG',
-  text: 'これは動画を簡単に\n作成できるツールです。',
-  movie: './img/movie.mov',
   backColor: '#333333',
-  textColor: '#ffffff'
+  textColor: '#ffffff',
+  scenes: [
+    {
+      text: 'これは動画を簡単に\n作成できるツールです。',
+      movie: './img/movie.mov'
+    }
+  ]
 }
 
 // 定数
@@ -11,60 +14,81 @@ var width = 1280
 var height = 720
 var iphoneImage = './img/frame.png'
 var frameRate = 10
-var time = 0
 
 var canvas
 var video
 var ctx
-var animationTimer
+
 var exportImages = []
+var time = 0
+var animationTimer
 
 // 初期化処理
 var initialize = function () {
   video = document.getElementById("video")
-  video.addEventListener('loadeddata', function() {
-    video.play()
-  })
 
   canvas = document.getElementById('canvas')
   canvas.width = width
   canvas.height = height
   ctx = canvas.getContext('2d')
-  animationTimer = setInterval(draw, 100);
+  var encoder = new EncodeMovieType(data.scenes[0])
+  encoder.encode()
+
 }
 
-var draw = function () {
-  time = time + 1
-  ctx.fillStyle = data.backColor
-  ctx.fillRect(0, 0, width, height)
+class EncodeMovieType {
+  constructor (scene) {
+    console.log(scene)
+      this.exportImages = []
+      this.scene = scene
+      this.time= 0
+      this.encode = this.encode.bind(this)
+      this.draw = this.draw.bind(this)
+  }
 
-  // テキストの描画
-  drawText(data.text +'\n' + time, 50, 300)
+  encode () {
+    video.setAttribute('src', this.scene.movie)
+    video.play()
+    video.addEventListener('loadeddata', function() {
+      video.play()
+    })
+    time = 0
+    animationTimer = setInterval(this.draw, 100)
+  }
 
-  Promise.resolve()
-    .then(function() {
-      //枠の描画
-      return drawImage(iphoneImage, width/2, 0, 450, height)
-    })
-    .then(function () {
-      return new Promise(function(resolve, reject) {
-        drawVideo()
-        resolve('taskB death')
+  draw () {
+    time = time + 1
+    ctx.fillStyle = data.backColor
+    ctx.fillRect(0, 0, width, height)
+
+    // テキストの描画
+    drawText(this.scene.text +'\n' + time, 50, 300)
+    Promise.resolve()
+      .then(function() {
+        //枠の描画
+        return drawImage(iphoneImage, width/2, 0, 450, height)
       })
-    })
-    .then(function () {
-      return new Promise(function(resolve, reject) {
-        if (time < 100) {
-          exportImages.push(exportPng())
-        } else {
-          console.log(exportImages)
-          clearInterval(animationTimer)
-        }
+      .then(function () {
+        return new Promise(function(resolve, reject) {
+          drawVideo()
+          resolve('taskB death')
+        })
       })
-    })
-    .catch(function (error) {
-      console.log(error)
-    })
+      .then(function () {
+        return new Promise((resolve, reject) => {
+          if (time < 100) {
+            exportImages.push(exportPng())
+          }
+        })
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+    if (time > 100) {
+      console.log(exportImages)
+      clearInterval(animationTimer)
+    }
+  }
 }
 
 // 非同期処理
@@ -97,12 +121,6 @@ var drawVideo = function () {
 var exportPng = function () {
   var data = canvas.toDataURL("image/png");
   return data
-}
-
-var exportVideo = function () {
-  var output = encoder.compile();
-  var url = webkitURL.createObjectURL(output);
-  console.log('url')
 }
 
 window.onload = function() {
