@@ -15,5 +15,31 @@
   <%= @pv.password %>
 </p>
 
+<%= link_to 'add pics', new_picture_store_path(pv_id: @pv.id) %> |
 <%= link_to 'Edit', edit_pv_path(@pv) %> |
 <%= link_to 'Back', pvs_path %>
+
+<div>
+<thead>
+  <tr>
+    <th>Store name</th>
+    <th>Picture</th>
+    <th>Content</th>
+    <th colspan="3"></th>
+  </tr>
+</thead>
+
+<tbody>
+  <% @pictures.each do |picture_store| %>
+    <tr>
+      <td><%= picture_store.store_name %></td>
+      <td><%= picture_store.picture %></td>
+      <td><%= picture_store.content %></td>
+      <td><%= link_to 'Show', picture_store %></td>
+      <td><%= link_to 'Edit', edit_picture_store_path(picture_store) %></td>
+      <td><%= link_to 'Destroy', picture_store, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+</tbody>
+</table>
+</div>

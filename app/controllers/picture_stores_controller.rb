@@ -14,6 +14,7 @@ class PictureStoresController < ApplicationController
 
   # GET /picture_stores/new
   def new
+    @pv_id = pv_params['pv_id']
     @picture_store = PictureStore.new
   end
 
@@ -21,11 +22,11 @@ class PictureStoresController < ApplicationController
   def edit
   end
 
-  # POST /picture_stores
+  # POST /picture_storese
   # POST /picture_stores.json
   def create
     @picture_store = PictureStore.new(picture_store_params)
-
+    # binding.pry
     respond_to do |format|
       if @picture_store.save
         format.html { redirect_to @picture_store, notice: 'Picture store was successfully created.' }
@@ -69,6 +70,11 @@ class PictureStoresController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def picture_store_params
-      params.require(:picture_store).permit(:store_name, :picture, :content)
+      params.require(:picture_store).permit(:store_name, :picture, :content, :pv_id)
+    end
+
+    def pv_params
+      # binding.pry
+      params.permit(:pv_id)
     end
 end

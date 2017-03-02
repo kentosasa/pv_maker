@@ -24,11 +24,16 @@
     <%= f.label :content %><br>
     <%= f.text_field :content %>
   </div>
+
   <div class="field">
-    <%= f.label :pv_id %><br>
-    <%= f.text_field :pv_id %>
-    <%= f.hidden_field pv_id: @pv_id %>
+    <%= f.hidden_field :pv_id, value: @pv_id %>
   </div>
+  <div class="field">
+    <%= f.hidden_field :pv_id, value: @pv_id %>
+  </div>
+  <p>
+    <%= @pv_id %>
+  </p>
   <div class="actions">
     <%= f.submit %>
   </div>
