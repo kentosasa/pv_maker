@@ -6,7 +6,8 @@ export default class Thumbnail extends Component {
     width: PropTypes.string.isRequired,
     height: PropTypes.string.isRequired,
     imageUrl: PropTypes.string.isRequired,
-    caption: PropTypes.string,
+    title: PropTypes.string,
+    content: PropTypes.string,
   }
   static defaultProps = {
     caption: '',
@@ -22,7 +23,7 @@ export default class Thumbnail extends Component {
     }
   }
   render() {
-    const { type, width, height, caption, imageUrl } = this.props;
+    const { type, width, height, title, content, imageUrl } = this.props;
     return (
       <div style={{
         display: 'inline-block',
@@ -34,7 +35,7 @@ export default class Thumbnail extends Component {
       >
         <div style={{
           width: '100%',
-          height: '90%',
+          height: '100%',
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center center',
@@ -45,10 +46,20 @@ export default class Thumbnail extends Component {
         <div style={{
           width: '100%',
           height: '10%',
+          marginTop: '3vh',
+          marginBottom: '3vh',
+          textAlign: 'center',
+          fontSize: '4vh',
+        }}>
+          {title}
+        </div>
+        <div style={{
+          width: '100%',
+          height: '10%',
           marginTop: '10px',
           textAlign: 'center'
         }}>
-          {caption}
+          {content}
         </div>
       </div>
     );

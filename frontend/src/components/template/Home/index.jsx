@@ -5,13 +5,32 @@ import RaisedButton from 'material-ui/RaisedButton';
 import ThumbWithText from '../../molecule/thumbWithText';
 import PictureWithExplain from '../../molecule/PictureWithExplain';
 
+import size from '../../../style/size';
+import color from '../../../style/color';
 import './style.css';
 
-const charaImage = [
-  require('../../../asset/haedal.png'),
-  require('../../../asset/haedal.png'),
-  require('../../../asset/haedal.png'),
-]
+
+const mainImage = require('../../../asset/movie_maker.jpg');
+const charaData = [
+  {
+    image: require('../../../asset/speed.png'),
+    title: '早い',
+    content: 'pvを最低5分で作成することができます。'
+  },
+  {
+    image: require('../../../asset/video_upload.png'),
+    title: '便利',
+    content: '作成した動画は、クリックすることでYoutubeなどに公開できます。'
+  },
+  {
+    image: require('../../../asset/watching_movie.png'),
+    title: 'ギャラリー',
+    content: '他人が公開した動画を見て、動画制作を学習することができます。'
+  }
+];
+const howtoImage = [
+
+];
 
 export default class Home extends Component {
   render() {
@@ -24,22 +43,35 @@ export default class Home extends Component {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            height: '100vh', backgroundColor: 'blue'
+            height: '100vh',
+            backgroundImage: `url(${mainImage})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center center',
+            opacity: .7,
           }}
         >
           {/* Jumbotron */}
           <div>
-          <h1>Hello</h1>
+            <span 
+              style={{
+                fontColor: 'black', 
+                fontSize: '10vh',
+              }}
+            >
+              PV-KIT
+            </span>
           </div>
           <div>
-          <h2>I love you</h2>
+            <h2>あなたもできるよ。</h2>
+            <h2>自分のための動画作り。</h2>
           </div>
           <Link to="/movie/create">
             <RaisedButton
               primary
-              label='動画を作成する'
+              label='5分で動画を作成する'
               style={{
-                width: '300px',
+                width: '30vw',
               }}
             />
           </Link>
@@ -47,8 +79,8 @@ export default class Home extends Component {
         {/* Characteristic */}
         <div 
           style={{
-            height: '75vh',
-            backgroundColor: 'gray',
+            minHeight: '75vh',
+            backgroundColor: '#FFF',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -64,7 +96,7 @@ export default class Home extends Component {
               alignItems: 'center',
             }}
           >
-            <h1>Hello world!</h1>
+            <h1>我々が提供する素晴らしさ</h1>
           </div>
           <div
             style={{
@@ -72,10 +104,11 @@ export default class Home extends Component {
               width: '100vw',
               display: 'flex',
               flexDirection: 'row',
+              flexWrap: 'wrap',
             }}
           >
           {
-            charaImage.map((image,index) => (
+            charaData.map((data,index) => (
               <div
                 style={{
                   display: 'flex',
@@ -84,11 +117,12 @@ export default class Home extends Component {
                 }}
               >
                 <ThumbWithText 
-                  type='round'
-                  height='250px'
-                  width='250px'
-                  imageUrl={image}
-                  caption=''
+                  type='default'
+                  height='260px'
+                  width='260px'
+                  imageUrl={data.image}
+                  title={data.title}
+                  content={data.content}
                 />
               </div>
             ))
@@ -109,10 +143,15 @@ export default class Home extends Component {
               display: 'flex',
               height: '20vh',
               justifyContent: 'center',
-              alignItems: 'center'
+              alignItems: 'center',
+              backgroundColor: '#E8F5E9',
+              position: 'relative'
             }}
           >
-            <h1 style={{ textAlign: 'center' }}>How to?</h1>
+            <div 
+              className='arrow-down teal'
+            />
+            <h1 style={{ textAlign: 'center' }}>簡単動画作成方法</h1>
           </div>
           {/* content */}
           <PictureWithExplain 

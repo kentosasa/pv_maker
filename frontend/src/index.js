@@ -13,6 +13,7 @@ import Home from './components/template/Home';
 import Pinterest from './components/template/Pinterest';
 import MovieCreate from './components/template/MovieCreate';
 import MovieCreateFinish from './components/template/MovieCreateFinish';
+import Empty from './components/template/Empty';
 // import Project3 from './components/template/Project3';
 
 import './index.css';
@@ -37,10 +38,11 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={defaultConnect(App)}>
         <IndexRoute component={defaultConnect(Home)}/>
-        <Route path="how" component={defaultConnect(Pinterest)}/>
+        <Route path="gallery" component={defaultConnect(Pinterest)}/>
 
         <Route path="movie/create" component={defaultConnect(MovieCreate)}/>
         <Route path="movie/finish" component={defaultConnect(MovieCreateFinish)}/>
+        <Route path="me" component={defaultConnect(Empty)}/>
         {/*<Route path="project3" component={Project3}/>*/}
       </Route>
     </Router>
