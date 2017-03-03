@@ -10,9 +10,9 @@ class VideosController < ApplicationController
   # GET /videos/1
   # GET /videos/1.json
   def show
-    movie = 'movie.mov'
-    title = 'fromrails'
-    @url = `PYTHONPATH=. python lib/tasks/youtube_upload/main.py #{title} #{movie}`
+    # movie = 'movie.mov'
+    # title = 'fromrails'
+    # @url = `PYTHONPATH=. python lib/tasks/youtube_upload/main.py #{title} #{movie}`
     # system("python lib/tasks/youtube_upload/upload.py --title=#{title} ./public/#{movie}")
   end
 
@@ -30,7 +30,11 @@ class VideosController < ApplicationController
   # POST /videos.json
   def create
     @video = Video.new(video_params)
-
+    # binding.pry
+    movie = 'movie.mov'#video_params['video'].tempfile
+    title = video_params['title']
+    url = `PYTHONPATH=. python lib/tasks/youtube_upload/main.py #{title} #{movie}`
+    @video.url = url
     respond_to do |format|
       if @video.save
         format.html { redirect_to @video, notice: 'Video was successfully created.' }

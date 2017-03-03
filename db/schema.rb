@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20170302190644) do
     t.string   "title"
     t.string   "video"
     t.integer  "pv_id"
+    t.string   "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
