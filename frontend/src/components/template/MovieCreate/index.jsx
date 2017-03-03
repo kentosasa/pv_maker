@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import api from '../../../service/backendService';
+
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -21,10 +23,8 @@ const customStyles = {
 };
 
 const movieMakingData = {
-  scenes: [
-
-  ]
-}
+  scenes: []
+};
 
 export default class MovieCreate extends Component {
   constructor(props) {
@@ -33,10 +33,10 @@ export default class MovieCreate extends Component {
     this.state = {
       modalIsOpen: false,
       imageSelect: false,
-      imageSelectUrl: '',
+      file: '',
       imagePreviewUrl: '',
       text: '',
-      title: 'hello man',
+      title: '',
       movieMakingData
     };
 
@@ -44,8 +44,14 @@ export default class MovieCreate extends Component {
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.addPictureAndText = this.addPictureAndText.bind(this);
+    this.makeMovie = this.makeMovie.bind(this);
     this._renderModal = this._renderModal.bind(this);
     this._renderImageAndText = this._renderImageAndText.bind(this);
+  }
+
+  makeMovie() {
+    console.log(this.state.movieMakingData);
+    console.log('pressed');
   }
 
   openModal() {
@@ -65,6 +71,7 @@ export default class MovieCreate extends Component {
       ...this.state.movieMakingData.scenes,
       {
         image: this.state.imagePreviewUrl,
+        file: this.state.file,
         text: this.state.text,
       }
     ]
@@ -73,7 +80,8 @@ export default class MovieCreate extends Component {
         scenes: addedScene,
       },
       imagePreviewUrl: '',
-      text: ''
+      text: '',
+      file: '',
     })
   }
 
@@ -138,7 +146,7 @@ export default class MovieCreate extends Component {
               }}
             >
               {
-                this.state.imageSelect && this.state.imageSelectUrl ?
+                this.state.imageSelect && this.state.file ?
                   <img 
                     src={this.state.imagePreviewUrl}
                     height='300'
@@ -172,7 +180,7 @@ export default class MovieCreate extends Component {
                       reader.onloadend = () => {
                         this.setState({
                           imageSelect: true,
-                          imageSelectUrl: file,
+                          file: file,
                           imagePreviewUrl: reader.result
                         });
                       }
@@ -275,14 +283,37 @@ export default class MovieCreate extends Component {
           </div>
           <div>
             <hr/>
-            <h2 style={{paddingLeft: '1vw'}}>題名：{this.state.title}</h2>
+              <TextField
+                hintText="動画のタイトルを入力してください。"
+                fullWidth
+                underlineDisabledStyle={false}
+                style={{
+                  fontSize: '1.5rem'
+                }}
+                onChange={(e) => {
+                  this.setState({
+                    title: e.target.value
+                  })
+                }}
+              />
             <hr/>
           </div>
           {
+            this.state.movieMakingData.scenes.length ?
             this.state.movieMakingData.scenes.map((scene, index) => (
               this._renderImageAndText({scene, index})
-            ))
+            )) :
+            <p>まだ画像がありません。</p>
           }
+          <RaisedButton
+            onClick={this.makeMovie}
+            style={{
+              marginLeft: '1vw',
+              zIndex: 0,
+            }}
+            primary
+            label='動画を作る'
+          />
         </div>
         {/* right column */}
         <div

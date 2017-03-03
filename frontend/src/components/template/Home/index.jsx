@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
+import api from '../../../service/backendService';
+
 import RaisedButton from 'material-ui/RaisedButton';
 import ThumbWithText from '../../molecule/thumbWithText';
 import PictureWithExplain from '../../molecule/PictureWithExplain';
@@ -28,13 +30,19 @@ const charaData = [
     content: '他人が公開した動画を見て、動画制作を学習することができます。'
   }
 ];
-const howtoImage = [
+const howToData = [
 
 ];
 
 export default class Home extends Component {
+  testApi() {
+    api
+    .get('/pvs')
+    .then((response) => {console.log(response)});
+  }
   render() {
     console.log(this.props);
+    this.testApi()
     return (
       <div>
         <div 
@@ -52,29 +60,37 @@ export default class Home extends Component {
           }}
         >
           {/* Jumbotron */}
-          <div>
+          <div
+            style={{
+              marginLeft: '60vw',
+            }}
+          >
             <span 
               style={{
                 fontColor: 'black', 
-                fontSize: '10vh',
+                fontSize: '7vw',
               }}
             >
               PV-KIT
             </span>
+            <div>
+              <h2>あなたもできるよ。</h2>
+              <h2>自分のための動画作り。</h2>
+            </div>
           </div>
-          <div>
-            <h2>あなたもできるよ。</h2>
-            <h2>自分のための動画作り。</h2>
+          <div style={{
+            marginLeft: '57vw'
+          }}>
+            <Link to="/movie/create">
+              <RaisedButton
+                primary
+                label='5分で動画を作成する'
+                style={{
+                  width: '30vw',
+                }}
+              />
+            </Link>
           </div>
-          <Link to="/movie/create">
-            <RaisedButton
-              primary
-              label='5分で動画を作成する'
-              style={{
-                width: '30vw',
-              }}
-            />
-          </Link>
         </div>
         {/* Characteristic */}
         <div 
@@ -176,7 +192,7 @@ export default class Home extends Component {
           }}
         >
           <h1>デモ 動画</h1>
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/aYi9rjg1gZA" frameborder="0" allowfullscreen></iframe>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/aYi9rjg1gZA" frameBorder="0" allowFullScreen></iframe>
         </div>
       </div>
     );
