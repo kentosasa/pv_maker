@@ -1,0 +1,47 @@
+@font-face{font-family:'Calluna';
+  src:url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/callunasansregular-webfont.woff') format('woff');
+}
+
+#columns {
+  font-family: Calluna;
+  padding-top: 5vh;
+  /* colum개수를 지정할 수도 있음. */
+  column-width: 350px;
+  column-gap: 15px;
+  max-width: 1100px;
+  width: 90%;
+  margin: 50px auto;
+}
+
+#columns figure {
+  display: inline-block;
+  border: 1px solid rgba(0,0,0,0.2);
+  margin: 0;
+  margin-bottom: 15px;
+  padding: 10px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+  transition: opacity .4s ease-in-out;
+}
+
+#columns figure:hover {
+  background-color: snow;
+}
+
+#columns figure img {
+  width: 100%;
+}
+
+#columns figure figcaption {
+  border-top: 1px solid rgba(0,0,0,0.2);
+  padding: 10px;
+  margin-top: 11px;
+}
+
+div#columns:hover figure:not(:hover) {
+	opacity: 0.4;
+}
+
+@media screen and (max-width: 750px) {
+  #columns { column-gap: 0px; }
+  #columns figure { width: 100% }
+}
