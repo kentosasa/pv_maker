@@ -20,7 +20,12 @@
     <%= f.label :video %><br>
     <%= f.file_field :video, :accept => 'video/*' %>
   </div>
-
+  <div class="field">
+    <%= f.hidden_field :pv_id, value: @pv_id %>
+  </div>
+  <p>
+    <%= @pv_id %>
+  </p>
   <div class="actions">
     <%= f.submit %>
   </div>

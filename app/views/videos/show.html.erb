@@ -10,6 +10,11 @@
   <%= @video.video %>
 </p>
 
+<p>
+  <strong>pv_id:</strong>
+  <%= @video.pv_id %>
+</p>
+
 <!-- その場で再生 -->
 <%= video_tag(@video.video_url.to_s, :autoplay => true, :loop => true) %>
 
