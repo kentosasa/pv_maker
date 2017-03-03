@@ -10,6 +10,10 @@ class VideosController < ApplicationController
   # GET /videos/1
   # GET /videos/1.json
   def show
+    movie = 'movie.mov'
+    title = 'fromrails'
+    @url = `PYTHONPATH=. python lib/tasks/youtube_upload/main.py #{title} #{movie}`
+    # system("python lib/tasks/youtube_upload/upload.py --title=#{title} ./public/#{movie}")
   end
 
   # GET /videos/new

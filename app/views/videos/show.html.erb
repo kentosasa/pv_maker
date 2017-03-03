@@ -15,6 +15,12 @@
   <%= @video.pv_id %>
 </p>
 
+<p>
+  <strong>youtube_link:</strong>
+  <%= link_to @url, @url, :target=>["_blank"]%>
+</p>
+
+
 <!-- その場で再生 -->
 <%= video_tag(@video.video_url.to_s, :autoplay => true, :loop => true) %>
 
