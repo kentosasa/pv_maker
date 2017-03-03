@@ -35,9 +35,11 @@ export default class MovieCreate extends Component {
       modalIsOpen: false,
       imageSelect: false,
       file: '',
-      imagePreviewUrl: '',
+      mediaUrl: '',
       text: '',
       title: '',
+      type: '',
+      duration: null, // op : 6 , image : 2, movie : 3
       movieMakingData
     };
 
@@ -50,10 +52,53 @@ export default class MovieCreate extends Component {
     this._renderImageAndText = this._renderImageAndText.bind(this);
   }
 
+  babelizeImage(media) {
+    return `${require(media)}`
+  }
+
   makeMovie() {
     console.log(this.state.movieMakingData);
     console.log('pressed');
-    canvasMovie();
+    const processedData = {
+      backColor: '#333333',
+      textColor: '#ffffff',
+      scenes: [
+        ...this.state.movieMakingData.scenes.map((scene) => {
+          return ({
+            ...scene,
+          });
+        })
+        // {
+        //   text: 'Promo',
+        //   logo: `${require('./img/logo.png')}`,
+        //   duration: 6,
+        //   opBackColor: '#ffffff',
+        //   opBoxColor: '#333333',
+        //   opTextColor: '#ffffff',
+        //   type: 'op'
+        // }
+        // ,{
+        //   text: 'こんな感じで\n画像と文字が映像になります',
+        //   image: `${require('./img/screenshot.PNG')}`,
+        //   duration: 2,
+        //   type: 'image'
+        // },
+        // {
+        //   text: 'これは動画を簡単に\n作成できるツールです。\n\nスマホで撮影した映像を\n投稿するとこんな感じになります。',
+        //   movie: `${require('./img/movie.mov')}`,
+        //   duration: 3,
+        //   type: 'movie'
+        // },
+        // {
+        //   text: '動画２つ目だ\n\nスマホで撮影した映像を\n投稿するとこんな感じになります。',
+        //   movie: `${require('./img/movie.mov')}`,
+        //   duration: 10,
+        //   type: 'movie'
+        // }
+      ]
+    }
+    console.log(processedData);
+    // canvasMovie();
   }
 
   openModal() {
@@ -72,16 +117,19 @@ export default class MovieCreate extends Component {
     const addedScene = [
       ...this.state.movieMakingData.scenes,
       {
-        image: this.state.imagePreviewUrl,
+        media: this.state.mediaUrl,
         file: this.state.file,
         text: this.state.text,
+        type: this.state.type,
+        duration: this.state.duration,
       }
     ]
     this.setState({
       movieMakingData: {
         scenes: addedScene,
       },
-      imagePreviewUrl: '',
+      media: '',
+      mediaUrl: '',
       text: '',
       file: '',
     })
@@ -93,13 +141,14 @@ export default class MovieCreate extends Component {
         style={{
           marginBottom: '3vh',
         }}
+        key={index}
       >
         <Card>
           <CardMedia
             overlay={<CardTitle title={`Scene ${index+1}`} />}
           >
             <img
-              src={scene.image}
+              src={scene.media}
               height={350}
             />
           </CardMedia>
@@ -150,7 +199,7 @@ export default class MovieCreate extends Component {
               {
                 this.state.imageSelect && this.state.file ?
                   <img
-                    src={this.state.imagePreviewUrl}
+                    src={this.state.mediaUrl}
                     height='300'
                     width='600'
                   /> : (
@@ -164,8 +213,59 @@ export default class MovieCreate extends Component {
                   />
                 )
               }
+                <div
+                  style={{
+                    marginBottom: '2vh',
+                  }}
+                >
+                  {
+                    ['op', 'image', 'movie'].map((type, index) => {
+                      let name = '';
+                      let duration;
+                      switch (type) {
+                        case 'op':
+                        {
+                          name = 'オプニング';
+                          duration = 6;
+                          break;
+                        }
+                        case 'image':
+                        {
+                          name = 'イメージ';
+                          duration = 2;
+                          break;
+                        }
+                        case 'movie':
+                        {
+                          name = '動画';
+                          duration = 3;
+                          break;
+                        }
+                        default:
+                          break;
+                      }
+                      console.log(index);
+                      return (
+                        <RaisedButton
+                          primary={ this.state.type === type }
+                          style={{
+                            margin: '1vw',
+                          }}
+                          key={index}
+                          label={name}
+                          onClick={() => {
+                            this.setState({
+                              type,
+                              duration
+                            })
+                          }}
+                        />
+                      );
+                    })
+                  }
+                </div>
                 <RaisedButton
-                  label='画像を追加'
+                  label='画像もしくは、映像を追加する'
                   primary
                   style={{
                     width: '50vw',
@@ -183,7 +283,7 @@ export default class MovieCreate extends Component {
                         this.setState({
                           imageSelect: true,
                           file: file,
-                          imagePreviewUrl: reader.result
+                          mediaUrl: reader.result
                         });
                       }
                       reader.readAsDataURL(file)
@@ -298,7 +398,6 @@ export default class MovieCreate extends Component {
                   })
                 }}
               />
-            <hr/>
           </div>
           {
             this.state.movieMakingData.scenes.length ?
@@ -312,6 +411,7 @@ export default class MovieCreate extends Component {
             style={{
               marginLeft: '1vw',
               zIndex: 0,
+              margin: '1vh'
             }}
             primary
             label='動画を作る'
