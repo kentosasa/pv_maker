@@ -1,0 +1,21 @@
+{
+  "name": "pv_maker",
+  "version": "0.0.1",
+  "description": "pv maker",
+  "main": "index.js",
+  "author": "kento sasamoto",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.22.1",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "babelify": "^7.3.0",
+    "browserify": "^14.0.0",
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-plumber": "^1.1.0",
+    "mocha": "^3.2.0",
+    "vinyl-source-stream": "^1.1.0"
+  }
+}
