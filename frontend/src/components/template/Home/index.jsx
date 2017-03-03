@@ -79,7 +79,7 @@ export default class Home extends Component {
         {/* Characteristic */}
         <div 
           style={{
-            minHeight: '75vh',
+            height: '75vh',
             backgroundColor: '#FFF',
             display: 'flex',
             justifyContent: 'center',
