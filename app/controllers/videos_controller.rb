@@ -33,10 +33,12 @@ class VideosController < ApplicationController
     # binding.pry
     movie = 'movie.mov'#video_params['video'].tempfile
     title = video_params['title']
-    url = `PYTHONPATH=. python lib/tasks/youtube_upload/main.py #{title} #{movie}`
-    @video.url = url
+    # @video.url = url
     respond_to do |format|
       if @video.save
+        # binding.pry
+        url = `PYTHONPATH=. python lib/tasks/youtube_upload/main.py #{title} #{movie}`
+        @video.update(url: url)
         format.html { redirect_to @video, notice: 'Video was successfully created.' }
         format.json { render :show, status: :created, location: @video }
       else
