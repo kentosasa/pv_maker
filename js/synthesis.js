@@ -25,6 +25,11 @@ var data = {
     movie: './img/movie.mov',
     duration: 10,
     type: 'movie'
+  }, {
+    text: '動画２つ目だ\n\nスマホで撮影した映像を\n投稿するとこんな感じになります。',
+    movie: './img/movie.mov',
+    duration: 10,
+    type: 'movie'
   }]
 };
 
@@ -62,6 +67,7 @@ var initialize = function initialize() {
 var encoder = function encoder() {
   if (data.scenes.length <= sceneNum) {
     console.log('complete');
+    console.log(exportImages);
     return;
   }
   console.log('call encoder: ' + sceneNum);
@@ -251,7 +257,6 @@ var MovieTypeEncoder = function () {
         console.log(error);
       });
       if (time >= frameRate * this.scene.duration) {
-        console.log(exportImages);
         clearInterval(animationTimer);
         sceneNum += 1;
         this.callback(sceneNum);
@@ -311,6 +316,7 @@ var drawBox = function drawBox(color, pos) {
   ctx.fillStyle = color;
   ctx.fillRect(pos[0], pos[1], pos[2], pos[3]);
 };
+
 // 現在のcnavasのモノをbase64で返す
 var exportPng = function exportPng() {
   var data = canvas.toDataURL("image/png");
@@ -318,8 +324,9 @@ var exportPng = function exportPng() {
 };
 
 var say = function say(text) {
+  console.log('say: ' + text);
   synthes.text = text;
-  // speechSynthesis.speak(synthes)
+  speechSynthesis.speak(synthes);
 };
 
 window.onload = function () {
