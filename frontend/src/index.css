@@ -4,7 +4,27 @@ body {
   font-family: sans-serif;
 }
 
-/*#body-wrapper {
-  padding-left: 10vh;
-  padding-right: 10vh;
-}*/
+#body-wrapper {
+  font-family: "Hiragino Kaku Gothic ProN","メイリオ", sans-serif;
+}
+
+.ReactModal__Body--open {
+    overflow: hidden;
+}
+
+.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-top: 50px solid #FFF;
+
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  margin-left: -25px;
+}
+
+.teal{
+  border-top: 20px solid #E8F5E9;
+} 
