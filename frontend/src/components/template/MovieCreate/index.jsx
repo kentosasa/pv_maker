@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import api from '../../../service/backendService';
-import { initialize } from '../../../utils/synthesis';
+import { canvasMovie } from '../../../utils/synthesis';
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import TextField from 'material-ui/TextField';
@@ -53,7 +53,7 @@ export default class MovieCreate extends Component {
   makeMovie() {
     console.log(this.state.movieMakingData);
     console.log('pressed');
-    initialize();
+    canvasMovie();
   }
 
   openModal() {
@@ -149,7 +149,7 @@ export default class MovieCreate extends Component {
             >
               {
                 this.state.imageSelect && this.state.file ?
-                  <img 
+                  <img
                     src={this.state.imagePreviewUrl}
                     height='300'
                     width='600'
@@ -164,14 +164,14 @@ export default class MovieCreate extends Component {
                   />
                 )
               }
-                <RaisedButton 
+                <RaisedButton
                   label='画像を追加'
                   primary
                   style={{
                     width: '50vw',
                   }}
                 >
-                  <input 
+                  <input
                     type="file"
                     onChange={(e) => {
                       e.preventDefault();

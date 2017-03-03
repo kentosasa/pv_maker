@@ -1,41 +1,42 @@
-var data = {
+export var canvasMovie = function () {
+  var data = {
   backColor: '#333333',
   textColor: '#ffffff',
   scenes: [
     {
       text: 'Promo',
-      logo: './img/logo.png',
-      duration: 2,
+      logo: `${require('./img/logo.png')}`,
+      duration: 6,
       opBackColor: '#ffffff',
       opBoxColor: '#333333',
       opTextColor: '#ffffff',
       type: 'op'
     }
-    // ,{
-    //   text: 'こんな感じで\n画像と文字が映像になります',
-    //   image: './img/screenshot.PNG',
-    //   duration: 2,
-    //   type: 'image'
-    // },
-    // {
-    //   text: 'これは動画を簡単に\n作成できるツールです。\n\nスマホで撮影した映像を\n投稿するとこんな感じになります。',
-    //   movie: './img/movie.mov',
-    //   duration: 3,
-    //   type: 'movie'
-    // },
-    // {
-    //   text: '動画２つ目だ\n\nスマホで撮影した映像を\n投稿するとこんな感じになります。',
-    //   movie: './img/movie.mov',
-    //   duration: 10,
-    //   type: 'movie'
-    // }
+    ,{
+      text: 'こんな感じで\n画像と文字が映像になります',
+      image: `${require('./img/screenshot.PNG')}`,
+      duration: 2,
+      type: 'image'
+    },
+    {
+      text: 'これは動画を簡単に\n作成できるツールです。\n\nスマホで撮影した映像を\n投稿するとこんな感じになります。',
+      movie: `${require('./img/movie.mov')}`,
+      duration: 3,
+      type: 'movie'
+    },
+    {
+      text: '動画２つ目だ\n\nスマホで撮影した映像を\n投稿するとこんな感じになります。',
+      movie: `${require('./img/movie.mov')}`,
+      duration: 10,
+      type: 'movie'
+    }
   ]
 }
 
 // 定数
 var width = 1280
 var height = 720
-var iphoneImage = './img/frame.png'
+var iphoneImage = `${require('./img/frame.png')}`
 var frameRate = 10
 var boxWidth = 150
 
@@ -54,10 +55,11 @@ var synthes = new SpeechSynthesisUtterance()
 synthes.lang = "ja-JP"
 
 // 初期化処理
-export var initialize = function () {
-  video = document.getElementById("video")
-
-  canvas = document.getElementById('canvas')
+var initialize = function () {
+  video = document.createElement("video")
+  document.body.appendChild(video)
+  canvas = document.createElement('canvas')
+  document.body.appendChild(canvas)
   canvas.width = width
   canvas.height = height
   ctx = canvas.getContext('2d')
@@ -181,7 +183,8 @@ class ImageTypeEncoder {
     ctx.fillStyle = data.backColor
     ctx.fillRect(0, 0, width, height)
     // テキストの描画
-    drawText(this.scene.text +'\n' + time, 100, 300, 10)
+    // drawText(this.scene.text +'\n' + time, 100, 300, 10)
+    drawText(this.scene.text, 100, 300, 10)
 
     Promise.resolve()
       .then(function() {
@@ -234,7 +237,8 @@ class MovieTypeEncoder {
     ctx.fillRect(0, 0, width, height)
 
     // テキストの描画
-    drawText(this.scene.text +'\n' + time, 100, 300, 10)
+    drawText(this.scene.text)
+
     Promise.resolve()
       .then(function() {
         //枠の描画
@@ -325,4 +329,6 @@ var say = function(text) {
 window.onload = function() {
   console.log('これは動画を簡単に作成できるツールです。')
   initialize()
+}
+initialize()
 }
