@@ -25,3 +25,5 @@
 /frontend/build/
 
 public/uploads
+lib/tasks/youtube_upload/client_secrets.json
+.DS_Store
