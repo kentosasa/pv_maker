@@ -6,6 +6,7 @@
 
 # Ignore bundler config.
 /.bundle
+
 vendor/bundle
 # Ignore the default SQLite database.
 /db/*.sqlite3
@@ -23,4 +24,10 @@ vendor/bundle
 /frontend/node_modules/
 /frontend/build/
 
+
+public/uploads
+lib/tasks/youtube_upload/client_secrets.json
+.DS_Store
+
 /public/movie-js/node_modules
+

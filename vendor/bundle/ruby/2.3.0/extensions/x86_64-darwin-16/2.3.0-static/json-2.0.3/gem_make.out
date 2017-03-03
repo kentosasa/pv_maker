@@ -1,0 +1,13 @@
+current directory: /Users/kounoshinsaku/Documents/pv_maker/vendor/bundle/ruby/2.3.0/gems/json-2.0.3/ext/json
+/Users/kounoshinsaku/.rbenv/versions/2.3.1/bin/ruby -r ./siteconf20170303-3498-1t82me4.rb extconf.rb 
+creating Makefile
+
+current directory: /Users/kounoshinsaku/Documents/pv_maker/vendor/bundle/ruby/2.3.0/gems/json-2.0.3/ext/json
+make "DESTDIR=" clean
+
+current directory: /Users/kounoshinsaku/Documents/pv_maker/vendor/bundle/ruby/2.3.0/gems/json-2.0.3/ext/json
+make "DESTDIR="
+make: Nothing to be done for `all'.
+
+current directory: /Users/kounoshinsaku/Documents/pv_maker/vendor/bundle/ruby/2.3.0/gems/json-2.0.3/ext/json
+make "DESTDIR=" install

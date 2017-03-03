@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :videos
   root to: 'pvs#index'
   resources :api do
     post 'upload', on: :collection
