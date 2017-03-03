@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import api from '../../../service/backendService';
+import { initialize } from '../../../utils/synthesis';
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import TextField from 'material-ui/TextField';
@@ -52,6 +53,7 @@ export default class MovieCreate extends Component {
   makeMovie() {
     console.log(this.state.movieMakingData);
     console.log('pressed');
+    initialize();
   }
 
   openModal() {
